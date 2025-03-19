@@ -12,7 +12,7 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   late List<Playlist> playlists;
-  List<Audio> allAudios = Constants().AUDIOS;
+  List<Audio> allAudios = Constants.AUDIOS;
   @override
   void initState() {
     // TODO: implement initState

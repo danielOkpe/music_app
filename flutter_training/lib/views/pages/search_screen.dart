@@ -12,7 +12,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<Audio> audios = Constants().AUDIOS;
+  List<Audio> audios = Constants.AUDIOS;
 
   @override
   Widget build(BuildContext context) {

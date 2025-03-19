@@ -7,7 +7,11 @@ class Audio{
   String file;
   AudioPlayer audioPlayer;
 
-  Audio({required this.title, required this.file, required this.img, required this.audioPlayer});
+  Audio({required this.title, required this.file, required this.img, required this.audioPlayer}){
+    if (kDebugMode) {
+      print("audio $title");
+    }
+  }
 
   void playMusic() async{
   await audioPlayer.play(AssetSource(file));
