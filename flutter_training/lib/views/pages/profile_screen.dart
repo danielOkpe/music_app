@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,8 +12,28 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String? path;
   File? image;
   bool isImage = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setPath();
+
+  }
+
+  setPath() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    path = prefs.getString("imagePath");
+    if(path != null){
+      setState(() {
+        image = File(path!);
+        isImage = true;
+      });
+    }
+  }
 
   Future<void> _pickImage({required ImageSource source}) async{
       ImagePicker picker = ImagePicker();
@@ -20,9 +41,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       if (xFile != null){
         setState(() {
           File? file = File(xFile.path);
-          image = file;
-          isImage = true;
+            image = file;
+            isImage = true;
         });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("imagePath",xFile.path);
       }
   }
 
