@@ -8,12 +8,16 @@ class Audio{
 
   Audio({required this.title, required this.file, required this.img, required this.audioPlayer});
 
-  void playMusic(){
-  audioPlayer.play(AssetSource(file));
+  void playMusic() async{
+  await audioPlayer.play(AssetSource(file));
   }
 
-  void pauseMusic(){
-      audioPlayer.pause();
+  void pauseMusic() async{
+    await audioPlayer.pause();
+  }
+
+  void stopMusic() async{
+   await audioPlayer.stop();
   }
 
   get audioPlayerState => audioPlayer.state;

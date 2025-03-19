@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 
-import '../song.dart';
+import '../audio.dart';
 
 class Constants{
   final List<Audio> _SONGLIST = [

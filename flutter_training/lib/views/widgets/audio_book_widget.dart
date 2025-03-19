@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/constants/constants.dart';
-import '../../models/song.dart';
+import '../../models/audio.dart';
 import 'cells/audio_cell.dart';
 
 class AudioBookWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class AudioBookWidget extends StatelessWidget {
       child: ListView.builder(
           itemCount: audiobooks.length,
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index) => AudioCell(audio: audiobooks[index])
+          itemBuilder: (context,index) => AudioCell(playlist: audiobooks, index: index,)
       ),
     );
   }

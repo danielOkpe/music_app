@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import '../../models/song.dart';
+import '../../models/audio.dart';
 import 'audio_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -51,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   onTap: () {
                     setState(() {
                       audios[index].playMusic();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(audio: audios[index])));
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(audio: audios[index])));
                     });
                   },
                 );
