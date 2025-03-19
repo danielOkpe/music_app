@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/constants/constants.dart';
-import '../../models/audio.dart';
 import 'cells/audio_cell.dart';
 
 class AudioBookWidget extends StatelessWidget {

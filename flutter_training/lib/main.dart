@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/controllers/app_navigator.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'controllers/providers/theme_provider.dart';
-import 'views/pages/home_screen.dart';
+import 'models/providers/theme_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
