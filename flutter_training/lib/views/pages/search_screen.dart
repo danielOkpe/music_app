@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_training/models/constants/constants.dart';
 import '../../models/audio.dart';
 import 'audio_screen.dart';
 
@@ -11,20 +12,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<Audio> audios = [
-    Audio(title: "Song 1", file: "audio/allegro.mp3",
-        img: "assets/images/cover_1.jpg", audioPlayer: AudioPlayer()),
-    Audio(title: "Song 2", file: "audio/BOUCAN.mp3",
-        img: "assets/images/cover_2.jpg", audioPlayer: AudioPlayer()),
-    Audio(title: "Song 3", file: "audio/allegro.mp3",
-        img: "assets/images/cover_1.jpg", audioPlayer: AudioPlayer()),
-    Audio(title: "Song 4", file: "audio/BOUCAN.mp3",
-        img: "assets/images/cover_2.jpg", audioPlayer: AudioPlayer()),
-    Audio(title: "Song 5", file: "audio/allegro.mp3",
-        img: "assets/images/cover_1.jpg", audioPlayer: AudioPlayer()),
-    Audio(title: "Song 6", file: "audio/BOUCAN.mp3",
-        img: "assets/images/cover_2.jpg", audioPlayer: AudioPlayer()),
-  ];
+  List<Audio> audios = Constants().AUDIOS;
 
   @override
   Widget build(BuildContext context) {
