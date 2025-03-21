@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../models/constants/constants.dart';
-import '../../models/audio.dart';
 import 'cells/audio_cell.dart';
 
 class AudioBookWidget extends StatelessWidget {
-  AudioBookWidget({super.key});
-  final List<Audio> audiobooks = Constants().AUDIOBOOK;
+  const AudioBookWidget({super.key});
 
 
   @override
@@ -14,10 +12,11 @@ class AudioBookWidget extends StatelessWidget {
     return SizedBox(
       height: 200,
       child: ListView.builder(
-          itemCount: audiobooks.length,
+          itemCount: Constants.AUDIOBOOK.length,
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index) => AudioCell(playlist: audiobooks, index: index,)
+          itemBuilder: (context,index) => AudioCell(playlist: Constants.AUDIOBOOK, index: index,)
       ),
     );
   }
+
 }
