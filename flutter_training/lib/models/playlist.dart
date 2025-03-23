@@ -4,7 +4,9 @@ class Playlist{
   List<Audio> playlist;
   String name;
 
-  Playlist({required this.playlist, required this.name});
+  Playlist({required this.playlist, required this.name}){
+    print("playlist $name");
+  }
 
   add(Audio audio){
     playlist.add(audio);

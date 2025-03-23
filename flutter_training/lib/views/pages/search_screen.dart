@@ -18,16 +18,21 @@ class _SearchScreenState extends State<SearchScreen> {
       children: [
         SearchAnchor(
             builder: (BuildContext context, SearchController controller ){
-              return SearchBar(
-                controller: controller,
-                onTap: () {
-                  controller.openView();
-                },
-                onChanged: (_) {
-                  controller.openView();
-                },
-                leading: const Icon(Icons.search),
-              );
+              return
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child:SearchBar(
+                      controller: controller,
+                      onTap: () {
+                        controller.openView();
+                      },
+                      onChanged: (_) {
+                        controller.openView();
+                      },
+                      leading: const Icon(Icons.search),
+                    ),
+
+                );
             },
             suggestionsBuilder: (BuildContext context, SearchController controller){
               return List<ListTile>.generate(audios.length, (int index) {

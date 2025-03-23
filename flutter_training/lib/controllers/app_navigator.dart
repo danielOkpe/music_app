@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_training/models/save/prefs.dart';
 import 'package:flutter_training/models/tabs.dart';
 import 'package:flutter_training/views/pages/home_screen.dart';
 import 'package:flutter_training/views/pages/library_screen.dart';
@@ -35,8 +37,17 @@ class _AppNavigatorState extends State<AppNavigator> {
   }
 
 
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Scaffold(
       appBar: AppBar(
         title: SafeArea(
@@ -86,7 +97,7 @@ class _AppNavigatorState extends State<AppNavigator> {
               });
             },
             selectedItemColor:_curentIndex < 3 ? Colors.green : Colors.grey,
-            unselectedItemColor: Colors.grey,
+            unselectedItemColor:Colors.grey,
           ),
       )
     );

@@ -11,18 +11,21 @@ class AllWidget extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
+          height: 20,
+        ),
+        SizedBox(
           height: 200,
           child:_buildListView(Constants.SONGLIST),
         ),
         SizedBox(
-          height: 30,
+          height: 20,
         ),
         SizedBox(
           height: 200,
           child:_buildListView(Constants.PODCASTLIST),
         ),
         SizedBox(
-          height: 30,
+          height: 20,
         ),
         SizedBox(
           height: 200,
