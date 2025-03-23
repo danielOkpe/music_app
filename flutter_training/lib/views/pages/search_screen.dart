@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
             builder: (BuildContext context, SearchController controller ){
               return
                 Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
                     child:SearchBar(
                       controller: controller,
                       onTap: () {
@@ -29,7 +29,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       onChanged: (_) {
                         controller.openView();
                       },
-                      leading: const Icon(Icons.search),
+                      leading: const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Icon(Icons.search),
+                      ),
                     ),
 
                 );

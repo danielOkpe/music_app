@@ -47,6 +47,7 @@ class _AudioCellState extends State<AudioCell> {
                     ),
                     Row(
                       children: [
+                        SizedBox(width: 4,),
                         Text(readableDuration(playlist[index].duration)),
                         SizedBox(width: 52.0,),
                         IconButton(
