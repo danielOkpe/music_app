@@ -3,13 +3,15 @@ import 'package:flutter/foundation.dart';
 
 class Audio{
   String title;
+  String artist;
   String img;
   String file;
   AudioPlayer audioPlayer;
+  int duration;
 
-  Audio({required this.title, required this.file, required this.img, required this.audioPlayer}){
+  Audio({required this.title, required this.artist, required this.file, required this.img, required this.audioPlayer, required this.duration}){
     if (kDebugMode) {
-      print("audio $title");
+      print("audio $artist");
     }
   }
 
@@ -25,5 +27,7 @@ class Audio{
    await audioPlayer.stop();
   }
 
+
   get audioPlayerState => audioPlayer.state;
+
 }

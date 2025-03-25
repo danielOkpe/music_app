@@ -17,28 +17,62 @@ class _AudioCellState extends State<AudioCell> {
   _AudioCellState({required this.playlist, required this.index});
   final List<Audio> playlist;
   final int index;
+
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child:  Card(
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Row(
       children: [
-        Image(
-            image:AssetImage(playlist[index].img)
+        SizedBox(width: 8,),
+        Card(
+          clipBehavior: Clip.antiAlias,
+          child: Row(
+            children: [
+              Image(
+                  image:AssetImage(playlist[index].img)
+              ),
+              SizedBox(width: 16,),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                child:  Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(playlist[index].title),
+                        SizedBox(width: 32.0,),
+                        Text(playlist[index].artist),
+                        SizedBox(width: 8,)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(width: 4,),
+                        Text(readableDuration(playlist[index].duration)),
+                        SizedBox(width: 52.0,),
+                        IconButton(
+                            onPressed: (){
+                              playlist[index].playMusic();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(playlist: playlist, index: index,)));
+                            },
+                            icon: Icon(Icons.play_arrow)
+                        ),
+                      ],
+                    ),
+                  ],
+                ) ,
+              ),
+            ],
+          ),
         ),
-        Text(playlist[index].title),
-        IconButton(
-            onPressed: (){
-              playlist[index].playMusic();
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(playlist: playlist, index: index,)));
-              },
-            icon: Icon(Icons.play_arrow)
-        ),
+        SizedBox(width: 8,),
       ],
-    ),
-    ),
     );
+  }
+  String readableDuration(int duration){
+   int minutes = (duration / 60).toInt();
+   int seconds = (duration % 60).toInt();
+   
+   return "$minutes : $seconds ";
   }
 }
