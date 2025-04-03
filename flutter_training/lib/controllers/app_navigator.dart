@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_training/models/save/prefs.dart';
 import 'package:flutter_training/models/tabs.dart';
 import 'package:flutter_training/views/pages/home_screen.dart';
 import 'package:flutter_training/views/pages/library_screen.dart';

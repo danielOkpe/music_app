@@ -1,12 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/controllers/app_navigator.dart';
 import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 import 'models/providers/theme_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ThemeProvider themeProvider = await ThemeProvider.create();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp( 
     ChangeNotifierProvider(
         create:(event) => themeProvider,
@@ -18,9 +22,6 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
    const MyApp({super.key});
-
-
-  
 
   // This widget is the root of your application.
   @override
@@ -35,7 +36,6 @@ class MyApp extends StatelessWidget {
           );
         }
     );
-
   }
 }
 

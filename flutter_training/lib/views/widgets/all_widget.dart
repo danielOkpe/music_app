@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/models/constants/constants.dart';
 import 'package:flutter_training/models/audio.dart';
+import 'package:flutter_training/models/playlist.dart';
 import 'package:flutter_training/views/widgets/cells/audio_cell.dart';
 
 class AllWidget extends StatefulWidget {
-  const AllWidget({super.key});
+  AllWidget({super.key,required this.playlists });
 
+  List<Playlist> playlists;
   @override
-  State<AllWidget> createState() => _AllWidgetState();
+  State<AllWidget> createState() => _AllWidgetState(playlists: playlists);
 }
 
 class _AllWidgetState extends State<AllWidget> {
 
+  _AllWidgetState({required this.playlists});
+
+  List<Playlist> playlists;
   List<double> opacities = [];
   List<double> translations = [];
 
@@ -21,8 +26,16 @@ class _AllWidgetState extends State<AllWidget> {
     _startAnimations();
   }
 
+  int getTotalItems(){
+    int cpt = 0;
+    for(Playlist playlist in playlists){
+      cpt += playlist.playlist.length;
+    }
+    return cpt;
+  }
+
   void _startAnimations() {
-    int totalItems = Constants.SONGLIST.length + Constants.PODCASTLIST.length + Constants.AUDIOBOOK.length;
+    int totalItems = getTotalItems();
 
     opacities = List.generate(totalItems, (_) => 0.0);
     translations = List.generate(totalItems, (_) => -20.0);
@@ -41,30 +54,19 @@ class _AllWidgetState extends State<AllWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        SizedBox(
-          height: 200,
-          child:_buildAnimatedListView(Constants.SONGLIST, 0),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        SizedBox(
-          height: 200,
-          child:_buildAnimatedListView(Constants.PODCASTLIST, Constants.SONGLIST.length),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        SizedBox(
-            height: 200,
-            child: _buildAnimatedListView(Constants.AUDIOBOOK, Constants.SONGLIST.length + Constants.PODCASTLIST.length )
-        )
-      ],
+    return Column(
+      children: List.generate(playlists.length, (playlistIndex) {
+        int startIndex = playlists.sublist(0, playlistIndex).fold(0, (sum, playlist) => sum + playlist.playlist.length);
+        return Column(
+          children: [
+            SizedBox(height: 20),
+            SizedBox(
+              height: 200,
+              child: _buildAnimatedListView(playlists[playlistIndex].playlist, startIndex),
+            ),
+          ],
+        );
+      }),
     );
   }
 

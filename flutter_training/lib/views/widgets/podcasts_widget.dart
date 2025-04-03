@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_training/models/constants/constants.dart';
 
+import '../../models/playlist.dart';
 import 'cells/audio_cell.dart';
 
 class PodcastsWidget extends StatefulWidget {
-  const PodcastsWidget({super.key});
+  PodcastsWidget({super.key, required this.playlist});
+  Playlist playlist;
 
   @override
-  State<PodcastsWidget> createState() => _PodcastsWidgetState();
+  State<PodcastsWidget> createState() => _PodcastsWidgetState(playlist: playlist);
 }
 
 class _PodcastsWidgetState extends State<PodcastsWidget> {
+  _PodcastsWidgetState({required this.playlist});
   double _opacity = 0.0;
+  Playlist playlist;
 
   _startAnimation(){
     Future.delayed(Duration(milliseconds: 100), () {
@@ -38,10 +42,10 @@ class _PodcastsWidgetState extends State<PodcastsWidget> {
       child: SizedBox(
         height: 200,
         child: ListView.builder(
-          itemCount: Constants.PODCASTLIST.length,
+          itemCount: playlist.playlist.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => AudioCell(
-            playlist: Constants.PODCASTLIST,
+            playlist: playlist.playlist,
             index: index,
           ),
         ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/models/audio.dart';
-import 'package:flutter_training/models/constants/constants.dart';
+import 'package:flutter_training/controllers/services/dto_service.dart';
+import 'package:flutter_training/controllers/services/functions_service.dart';
+import 'package:flutter_training/models/DTO/audioDTO.dart';
+import 'package:flutter_training/models/DTO/playlistDTO.dart';
 import 'package:flutter_training/models/playlist.dart';
+import 'package:flutter_training/views/pages/playlist_screen.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -11,19 +14,48 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class _LibraryScreenState extends State<LibraryScreen> {
-  late List<Playlist> playlists;
-  List<Audio> allAudios = Constants.AUDIOS;
+  late List<Playlist> allPlaylists;
+  late List<AudioDTO> allAudios;
+  bool isLoad = true;
+
+  initPlaylists() async{
+    dynamic resPlaylist = await FunctionsService.getAllOtherPlaylist();
+
+    if(resPlaylist is List){
+      List<PlaylistDTO> playlistsDTO =  resPlaylist.map((e) => PlaylistDTO.fromJson(e)).toList();
+      List<Playlist> playlists = await DTOService.convertDTOsToPlaylists(playlistsDTO);
+
+      setState(() {
+        allPlaylists = playlists;
+        isLoad = false;
+      });
+    }
+  }
+
+  initAudios() async {
+    dynamic resAudio = await FunctionsService.getAllAudios();
+
+    print(resAudio);
+    if(resAudio is List){
+      List<AudioDTO> audiosDTO =  resAudio.map((e) => AudioDTO.fromJson(e)).toList();
+
+      setState(() {
+        allAudios = audiosDTO;
+      });
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    playlists = [];
+    initPlaylists();
   }
 
   void _createPlaylist() async {
     TextEditingController nameController = TextEditingController();
-    List<Audio> selectedAudios = [];
+    List<AudioDTO> selectedAudios = [];
+    await initAudios();
 
     await showDialog(
       context: context,
@@ -81,11 +113,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     child: Text("Annuler"),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: ()async {
                       if (nameController.text.isNotEmpty && selectedAudios.isNotEmpty) {
+                        Playlist playlist = Playlist(name: nameController.text,playlist:await DTOService.convertDTOsToAudiosWithoutImg(selectedAudios));
+                        print("the normal playlist: ${playlist.playlist}");
+
+                        PlaylistDTO playlistDTO = DTOService.convertPlaylistToDTO(playlist);
+
+                        print("the DTO playlist: ${playlistDTO.playlist[0].toJSON()}");
                         setState(() {
-                          playlists.add(Playlist(name: nameController.text,playlist: selectedAudios));
+                          allPlaylists.add(playlist);
                         });
+                        var response = await FunctionsService.createPlaylist(playlist: playlistDTO);
+                        print("created playlist: $response");
                         Navigator.pop(context);
                       }
                     },
@@ -102,7 +142,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return isLoad
+      ?const Center(child: CircularProgressIndicator())
+    :
+      Column(
       children: [
         SizedBox(height: 20,),
         SizedBox(
@@ -110,17 +153,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
           child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 32.0),
             child:ListView.builder(
-                itemCount: playlists.length,
-                scrollDirection: Axis.horizontal,
+                itemCount: allPlaylists.length,
+                scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) => Card(
                   child: Padding(
                       padding: EdgeInsets.only(left: 16.0),
                       child:Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(playlists[index].name),
+                          Text(allPlaylists[index].name),
                           IconButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PlaylistScreen(playlist: allPlaylists[index]) ));
+                            },
                             icon: Icon(Icons.play_arrow),
                           )
                         ],

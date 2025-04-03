@@ -8,3 +8,4 @@
 # Back part
 - CRUD playlist dans la base de donnée (sauf pour les playlists principales qui doivent seulement être récupérable)
 - récupérer un audio
+- récupérer tout les audios

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/models/playlist.dart';
 
 import '../../models/constants/constants.dart';
 import 'cells/audio_cell.dart';
 
 class AudioBookWidget extends StatefulWidget {
-  const AudioBookWidget({super.key});
+  AudioBookWidget({super.key, required this.playlist});
+
+  Playlist playlist;
 
   @override
-  State<AudioBookWidget> createState() => _AudioBookWidgetState();
+  State<AudioBookWidget> createState() => _AudioBookWidgetState(playlist: playlist);
 }
 
 class _AudioBookWidgetState extends State<AudioBookWidget> {
 
+  _AudioBookWidgetState({required this.playlist });
+
+  Playlist playlist;
   double _opacity = 0.0;
 
   _startAnimation(){
@@ -39,10 +45,10 @@ class _AudioBookWidgetState extends State<AudioBookWidget> {
       child: SizedBox(
         height: 200,
         child: ListView.builder(
-          itemCount: Constants.AUDIOBOOK.length,
+          itemCount: playlist.playlist.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) => AudioCell(
-            playlist: Constants.AUDIOBOOK,
+            playlist: playlist.playlist,
             index: index,
           ),
         ),

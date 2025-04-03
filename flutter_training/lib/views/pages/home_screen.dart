@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_training/controllers/services/dto_service.dart';
+import 'package:flutter_training/controllers/services/functions_service.dart';
+import 'package:flutter_training/models/DTO/playlistDTO.dart';
 import 'package:flutter_training/views/widgets/all_widget.dart';
 import 'package:flutter_training/views/widgets/audio_book_widget.dart';
 import 'package:flutter_training/views/widgets/podcasts_widget.dart';
 import 'package:flutter_training/views/widgets/songs_widget.dart';
+
+import '../../models/playlist.dart';
 
 
 
@@ -15,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
+  late List<Playlist> allPlaylists;
+  bool isLoad = true;
 
   setIndex({ required int index}){
     setState(() {
@@ -22,9 +29,34 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  initAllAudios() async{
+    dynamic res = await FunctionsService.getAllInitialPlaylist();
+
+    if (res is List) {
+      List<PlaylistDTO> playlistsDTO =  res.map((e) => PlaylistDTO.fromJson(e)).toList();
+      List<Playlist> playlists = await DTOService.convertDTOsToPlaylists(playlistsDTO);
+
+      setState(() {
+        allPlaylists = playlists;
+        isLoad = false;
+      });
+    print("all audios: ${allPlaylists.toString()}");
+  }
+
+}
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initAllAudios();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return  isLoad
+        ?const Center(child: CircularProgressIndicator())
+    :
+      Column(
         children: [
           Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -78,10 +110,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 Widget homeWidgets({required int index}){
     switch(index){
-      case 0: return  AllWidget();
-      case 1: return  SongsWidget();
-      case 2: return  PodcastsWidget();
-      case 3: return  AudioBookWidget();
+      case 0: return  AllWidget(playlists: allPlaylists );
+      case 1: return  SongsWidget(playlist: allPlaylists[0]);
+      case 2: return  PodcastsWidget(playlist: allPlaylists[1]);
+      case 3: return  AudioBookWidget(playlist: allPlaylists[2]);
       default: return Container();
     }
 }

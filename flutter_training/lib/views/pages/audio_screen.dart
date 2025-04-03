@@ -96,7 +96,7 @@ onAudioPositionChange(Duration newPosition){
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image(
-              image: AssetImage(playlist[_index].img)
+              image: NetworkImage(playlist[_index].img)
           ),
           Text(playlist[_index].title),
           Row(

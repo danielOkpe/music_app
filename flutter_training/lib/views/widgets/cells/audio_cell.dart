@@ -19,53 +19,57 @@ class _AudioCellState extends State<AudioCell> {
   final int index;
 
 
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         SizedBox(width: 8,),
-        Card(
-          clipBehavior: Clip.antiAlias,
-          child: Row(
-            children: [
-              Image(
-                  image:AssetImage(playlist[index].img)
-              ),
-              SizedBox(width: 16,),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                child:  Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(playlist[index].title),
-                        SizedBox(width: 32.0,),
-                        Text(playlist[index].artist),
-                        SizedBox(width: 8,)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(width: 4,),
-                        Text(readableDuration(playlist[index].duration)),
-                        SizedBox(width: 52.0,),
-                        IconButton(
-                            onPressed: (){
-                              playlist[index].playMusic();
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(playlist: playlist, index: index,)));
-                            },
-                            icon: Icon(Icons.play_arrow)
-                        ),
-                      ],
-                    ),
-                  ],
-                ) ,
-              ),
-            ],
-          ),
+        SizedBox(
+          height: 200,
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            child: Row(
+              children: [
+                Image(
+                    image:NetworkImage(playlist[index].img)
+                ),
+                SizedBox(width: 16,),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child:  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(playlist[index].title),
+                          SizedBox(width: 32.0,),
+                          Text(playlist[index].artist),
+                          SizedBox(width: 8,)
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(width: 4,),
+                          Text(readableDuration(playlist[index].duration)),
+                          SizedBox(width: 52.0,),
+                          IconButton(
+                              onPressed: (){
+                                playlist[index].playMusic();
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AudioScreen(playlist: playlist, index: index,)));
+                              },
+                              icon: Icon(Icons.play_arrow)
+                          ),
+                        ],
+                      ),
+                    ],
+                  ) ,
+                ),
+              ],
+            ),
+          ) ,
         ),
-        SizedBox(width: 8,),
+        SizedBox(width: 2,),
       ],
     );
   }
